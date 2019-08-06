@@ -1,0 +1,74 @@
+<div>
+
+<table>
+    <tr>
+      <th>sno</th> &nbsp;&nbsp;&nbsp;
+      <th>collegecode</th>&nbsp;&nbsp;&nbsp;
+      <th>collename</th>&nbsp;&nbsp;&nbsp;
+      <th>collegelocation</th>&nbsp;&nbsp;&nbsp;
+      <th>aflicatedate</th>
+    </tr>
+    <tr *ngFor="let c of collegedata">
+        <td><input type="checkbox" (click)="onChange($event)"/> </td>
+      
+        <br/>
+        <td>
+        <input type="text" size="5" value={{c.sno}}> </td>&nbsp;&nbsp;&nbsp;
+        <td><input type="checkbox" (click)="onChange($event)"/> </td>
+      <td>
+        <br/>
+        <input type="text" size="10" value={{c.collegeCode}}> </td>&nbsp;&nbsp;&nbsp;
+      <td>
+        <br/>
+        <input type="text" size="10" value={{c.collegeName}}> </td>&nbsp;&nbsp;&nbsp;
+      <td>
+        <br/>
+        <input type="text" size="10" value={{c.collegeLocation}}> </td>&nbsp;&nbsp;&nbsp;
+      <td>
+        <br/>
+        <input type="text" size="10" value={{c.affliatedDate}}> </td>&nbsp;&nbsp;&nbsp;
+      
+        <br/>
+        <td><input type="checkbox" (click)="onChange($event)"/> </td>
+        <td>
+        <button  (click)="onDelete(c)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+<hr style="color: brown">
+
+<button>cancel</button>
+</div>
+delete.ts:
+import { Component, OnInit } from '@angular/core';
+import { UnivercityService } from '../univercity.service';
+
+@Component({
+  selector: 'app-loadbulk',
+  templateUrl: './loadbulk.component.html',
+  styleUrls: ['./loadbulk.component.css']
+})
+export class LoadbulkComponent implements OnInit {
+  collegedata:any[]=[];
+  checkb:any[]=[];
+  constructor(private service:UnivercityService) { }
+
+  ngOnInit() {
+  }
+  onDelete(checkb){
+    var d=this. collegedata.indexOf(checkb);
+  this.collegedata.splice(d,1);
+  this.service.deletecollege(checkb).subscribe();
+}
+  /* $(document).ready(function() {
+    $('.record_table tr').click(function(event) {
+      if (event.target.type !== 'checkbox') {
+        $(':checkbox', this).trigger('click');
+      }
+    });
+  }); */
+  onChange(event){
+     this.checkb=event.target.type.checkbox;
+  }
+}
